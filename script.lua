@@ -19,8 +19,25 @@ local MAX_DIST = 700
 local BONE_DIST_LIMIT = 300
 local HP_BAR_THICKNESS = 4 -- menor que antes
 local RECT_THICKNESS = 1 -- borda mais fina
-local AIM_FOV = 200 -- campo de visão do aimbot
-local AIM_SMOOTH = 0.13 -- força do puxão fixada em 0.13
+local AIM_FOV = 300 -- campo de visão do aimbot
+local AIM_SMOOTH = 1 -- força do puxão fixada em 1
+local function isVisible(targetPart, character)
+    local origin = Camera.CFrame.Position
+    local direction = (targetPart.Position - origin)
+
+    local params = RaycastParams.new()
+    params.FilterType = Enum.RaycastFilterType.Blacklist
+    params.FilterDescendantsInstances = {LocalPlayer.Character}
+    params.IgnoreWater = true
+
+    local result = workspace:Raycast(origin, direction, params)
+
+    if not result then
+        return true
+    end
+
+    return result.Instance:IsDescendantOf(character)
+end
 
 --// CACHE
 local ESP_CACHE = {}
@@ -225,7 +242,7 @@ end
 -- UPDATE LOOP ~90 FPS
 ------------------------------------------------
 local lastUpdate = 0
-local UPDATE_INTERVAL = 0.011 -- ~90 FPS
+local UPDATE_INTERVAL = 0.008 -- ~125 FPS
 
 RunService.RenderStepped:Connect(function(dt)
     lastUpdate = lastUpdate + dt
@@ -333,9 +350,11 @@ RunService.RenderStepped:Connect(function(dt)
             if not player.Character then continue end
             local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
             local head = player.Character:FindFirstChild("Head")
-            if humanoid and head then
-                local screenPos, onScreen = Camera:WorldToViewportPoint(head.Position)
-                if onScreen then
+           if humanoid and head then
+    if not isVisible(head, player.Character) then continue end
+
+    local screenPos, onScreen = Camera:WorldToViewportPoint(head.Position)
+    if onScreen then
                     local mousePos = Vector2.new(Mouse.X, Mouse.Y)
                     local dist = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
                     if dist < closestDist then
@@ -353,4 +372,3 @@ RunService.RenderStepped:Connect(function(dt)
         end
     end
 end)
-
