@@ -15,12 +15,12 @@ local ENEMY_COLOR = Color3.fromRGB(255,70,70)
 local LINE_COLOR = Color3.fromRGB(255,255,255)
 local SKELETON_COLOR = Color3.fromRGB(0,255,0)
 local CONTRAST_COLOR = Color3.fromRGB(255,0,0) -- destaque vermelho
-local MAX_DIST = 700
-local BONE_DIST_LIMIT = 300
+local MAX_DIST = 1000
+local BONE_DIST_LIMIT = 1000
 local HP_BAR_THICKNESS = 4 -- menor que antes
 local RECT_THICKNESS = 1 -- borda mais fina
-local AIM_FOV = 300 -- campo de visão do aimbot
-local AIM_SMOOTH = 1 -- força do puxão fixada em 1
+local AIM_FOV = 500 -- campo de visão do aimbot
+local AIM_SMOOTH = 2 -- força do puxão fixada em 1
 local function isVisible(targetPart, character)
     local origin = Camera.CFrame.Position
     local direction = (targetPart.Position - origin)
