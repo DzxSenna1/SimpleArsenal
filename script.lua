@@ -16,49 +16,14 @@ local LINE_COLOR = Color3.fromRGB(255,255,255)
 local SKELETON_COLOR = Color3.fromRGB(0,255,0)
 local CONTRAST_COLOR = Color3.fromRGB(255,0,0) -- destaque vermelho
 local MAX_DIST = 700
-local BONE_DIST_LIMIT = 300
+local BONE_DIST_LIMIT = 700
 local HP_BAR_THICKNESS = 4 -- menor que antes
 local RECT_THICKNESS = 1 -- borda mais fina
-local AIM_FOV = 300 -- campo de visão do aimbot
-local AIM_SMOOTH = 1 -- força do puxão fixada em 1
+local AIM_FOV =300  -- campo de visão do aimbot
+local AIM_SMOOTH = 1.5 -- força do puxão fixada em 1.5
 local function isVisible(targetPart, character)
     local origin = Camera.CFrame.Position
     local direction = (targetPart.Position - origin)
-    
-local function getClosestEnemyHRP()
-    local char = LocalPlayer.Character
-    local hrp = char and char:FindFirstChild("HumanoidRootPart")
-    if not hrp then return end
-
-    local closest, minDist = nil, math.huge
-    for _, player in ipairs(Players:GetPlayers()) do
-        if player ~= LocalPlayer and isEnemy(player) and player.Character then
-            local ehrp = player.Character:FindFirstChild("HumanoidRootPart")
-            local hum = player.Character:FindFirstChildOfClass("Humanoid")
-            if ehrp and hum and hum.Health > 0 then
-                local dist = (hrp.Position - ehrp.Position).Magnitude
-                if dist < minDist then
-                    minDist = dist
-                    closest = ehrp
-                end
-            end
-        end
-    end
-    return closest
-end
-
-local function doAutoTP()
-    if not AUTO_TP_ENABLED then return end
-    local char = LocalPlayer.Character
-    local hrp = char and char:FindFirstChild("HumanoidRootPart")
-    if not hrp then return end
-    if not hasGoldenKnife(char) then return end
-
-    local target = getClosestEnemyHRP()
-    if target then
-        hrp.CFrame = target.CFrame * CFrame.new(0,0,-3)
-    end
-end
 
     local params = RaycastParams.new()
     params.FilterType = Enum.RaycastFilterType.Blacklist
@@ -106,7 +71,6 @@ aimbotButton.Text = "Aimbot: OFF"
 aimbotButton.Font = Enum.Font.SourceSansBold
 aimbotButton.TextSize = 16
 aimbotButton.Parent = gui
-end
 
 ------------------------------------------------
 -- TEAM CHECK (NPC = enemy)
@@ -408,4 +372,3 @@ RunService.RenderStepped:Connect(function(dt)
         end
     end
 end)
-
