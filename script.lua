@@ -24,19 +24,7 @@ local AIM_SMOOTH = 1 -- força do puxão fixada em 1
 local function isVisible(targetPart, character)
     local origin = Camera.CFrame.Position
     local direction = (targetPart.Position - origin)
--- AUTO TP (GOLDEN KNIFE)
-local AUTO_TP_ENABLED = false
-
-local function hasGoldenKnife(character)
-    if not character then return false end
-    for _, tool in ipairs(character:GetChildren()) do
-        if tool:IsA("Tool") and tool.Name == "GoldenKnife" then
-            return true
-        end
-    end
-    return false
-end
-
+    
 local function getClosestEnemyHRP()
     local char = LocalPlayer.Character
     local hrp = char and char:FindFirstChild("HumanoidRootPart")
@@ -118,22 +106,7 @@ aimbotButton.Text = "Aimbot: OFF"
 aimbotButton.Font = Enum.Font.SourceSansBold
 aimbotButton.TextSize = 16
 aimbotButton.Parent = gui
-
--- AUTO TP BUTTON
-local autoTpButton = Instance.new("TextButton")
-autoTpButton.Size = UDim2.fromOffset(140,40)
-autoTpButton.Position = UDim2.new(0,10,0,110)
-autoTpButton.BackgroundColor3 = Color3.fromRGB(30,30,30)
-autoTpButton.TextColor3 = Color3.new(1,1,1)
-autoTpButton.Text = "Auto TP: OFF"
-autoTpButton.Font = Enum.Font.SourceSansBold
-autoTpButton.TextSize = 16
-autoTpButton.Parent = gui
-
-autoTpButton.MouseButton1Click:Connect(function()
-    AUTO_TP_ENABLED = not AUTO_TP_ENABLED
-    autoTpButton.Text = AUTO_TP_ENABLED and "Auto TP: ON" or "Auto TP: OFF"
-end)
+end
 
 ------------------------------------------------
 -- TEAM CHECK (NPC = enemy)
@@ -435,8 +408,4 @@ RunService.RenderStepped:Connect(function(dt)
         end
     end
 end)
-     -- AUTO TP UPDATE
-     doAutoTP()
-end)
-
 
