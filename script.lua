@@ -19,8 +19,8 @@ local MAX_DIST = 700
 local BONE_DIST_LIMIT = 700
 local HP_BAR_THICKNESS = 4 -- menor que antes
 local RECT_THICKNESS = 1 -- borda mais fina
-local AIM_FOV =300  -- campo de visão do aimbot
-local AIM_SMOOTH = 1.5 -- força do puxão fixada em 1.5
+local AIM_FOV =500  -- campo de visão do aimbot
+local AIM_SMOOTH = 1 -- força do puxão fixada em 1
 local function isVisible(targetPart, character)
     local origin = Camera.CFrame.Position
     local direction = (targetPart.Position - origin)
